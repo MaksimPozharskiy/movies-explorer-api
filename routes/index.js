@@ -3,6 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   createUser, login, getMe, updateMe,
 } = require('../controllers/users');
+const NotFoundError = require('../errors/not-found-err');
 const auth = require('../middlewares/auth');
 
 // Роуты регистрации и авторизации
@@ -32,5 +33,9 @@ router.put('/users/me', celebrate({
 }), updateMe);
 
 // Movie routes
+
+router.use('*', () => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
+});
 
 module.exports = router;

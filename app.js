@@ -18,9 +18,6 @@ mongoose.connect('mongodb://localhost:27017/movies-explorer', {
 app.use(express.json());
 app.use(routes);
 
-app.use('*', () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден');
-});
 // app.use(errorLogger);
 // app.use(errors());
 app.use(centralErrorsHandler);
