@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const routes = require('./routes/index');
 const centralErrorsHandler = require('./middlewares/centralErrorsHandler');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DB_ADRESS } = process.env;
 const app = express();
 
 // Подлключение к БД movies-explorer
-mongoose.connect('mongodb://localhost:27017/movies-explorer', {
+mongoose.connect(DB_ADRESS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
