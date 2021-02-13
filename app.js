@@ -1,13 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const { errors, celebrate, Joi } = require('celebrate');
+// const { errors, celebrate, Joi } = require('celebrate');
 const mongoose = require('mongoose');
-
-// Тут подключаем роуты с авторизацией
-// Тут подключить логеры
-// Тут подключаем роуты без авторизации
-// Тут полдключить мидлвару авторизации
-// Тут подключить 404 ошибку для цетнрализованого обработчика
+const routes = require('./routes/index');
+const centralErrorsHandler = require('./middlewares/centralErrorsHandler');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -19,5 +15,14 @@ mongoose.connect('mongodb://localhost:27017/movies-explorer', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+app.use(express.json());
+app.use(routes);
+
+app.use('*', () => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
+});
+// app.use(errorLogger);
+// app.use(errors());
+app.use(centralErrorsHandler);
 
 app.listen(PORT);
