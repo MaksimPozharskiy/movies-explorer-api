@@ -3,6 +3,9 @@ const { celebrate, Joi } = require('celebrate');
 const {
   createUser, login, getMe, updateMe,
 } = require('../controllers/users');
+const {
+  createMovie,
+} = require('../controllers/movies');
 const NotFoundError = require('../errors/not-found-err');
 const auth = require('../middlewares/auth');
 
@@ -33,6 +36,20 @@ router.put('/users/me', celebrate({
 }), updateMe);
 
 // Movie routes
+router.post('/movies', celebrate({
+  body: Joi.object().keys({
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
+    trailer: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
+    thumbnail: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+  }),
+}), createMovie);
 
 router.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');

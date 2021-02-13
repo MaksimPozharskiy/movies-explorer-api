@@ -53,11 +53,15 @@ const movieSchema = new mongoose.Schema({
     },
   },
   owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: [true, 'Поле обязательное'],
   },
-  movieId: {
-    required: [true, 'Поле обязательное'],
-  },
+  // movieId: { - это будет браться с другого API
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'movie',
+  //   required: [true, 'Поле обязательное'],
+  // },
   nameRU: {
     type: String,
     required: [true, 'Поле обязательное'],
