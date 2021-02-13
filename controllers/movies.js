@@ -4,10 +4,18 @@ const BadRequestError = require('../errors/bad-request');
 
 const createMovie = (req, res, next) => {
   const {
-    country, director, duration, year, description, image, trailer, thumbnail, nameRU, nameEN,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image, trailer,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
   } = req.body;
   const owner = req.user._id;
-  // const movieId = req.movie._id; это будет браться с другого API
 
   Movie.create({
     country,
@@ -19,7 +27,7 @@ const createMovie = (req, res, next) => {
     trailer,
     thumbnail,
     owner,
-    // movieId, - это будет браться с другого API
+    movieId,
     nameRU,
     nameEN,
   })

@@ -57,11 +57,11 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
     required: [true, 'Поле обязательное'],
   },
-  // movieId: { - это будет браться с другого API
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'movie',
-  //   required: [true, 'Поле обязательное'],
-  // },
+  movieId: {
+    type: Number,
+    ref: 'movie',
+    required: [true, 'Поле обязательное'],
+  },
   nameRU: {
     type: String,
     required: [true, 'Поле обязательное'],
