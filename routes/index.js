@@ -4,7 +4,7 @@ const {
   createUser, login, getMe, updateMe,
 } = require('../controllers/users');
 const {
-  createMovie, getMovies,
+  createMovie, getMovies, deleteMovie,
 } = require('../controllers/movies');
 const NotFoundError = require('../errors/not-found-err');
 const auth = require('../middlewares/auth');
@@ -53,6 +53,11 @@ router.post('/movies', celebrate({
 }), createMovie);
 
 router.get('/movies', getMovies);
+router.delete('/movies/:movieId', celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().length(24).hex(),
+  }),
+}), deleteMovie);
 
 router.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');

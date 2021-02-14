@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-// const NotFoundError = require('../errors/not-found-err');
+const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request');
 
 const createMovie = (req, res, next) => {
@@ -43,8 +43,25 @@ const createMovie = (req, res, next) => {
 const getMovies = (req, res, next) => {
   const owner = req.user._id;
   Movie.find({ owner })
-    .then((cards) => res.status(200).send(cards))
+    .then((movies) => res.status(200).send(movies))
     .catch(next);
 };
 
-module.exports = { createMovie, getMovies };
+const deleteMovie = (req, res, next) => {
+  Movie.findOneAndRemove({ owner: req.user._id, _id: req.params.movieId })
+    .then((movie) => {
+      if (!movie) {
+        throw new NotFoundError('У пользователя нет фильма с таким id');
+      }
+      return res.status(200).send({ message: 'Фильм удалён' });
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Данные не прошли валидацию');
+      }
+      throw err;
+    })
+    .catch(next);
+};
+
+module.exports = { createMovie, getMovies, deleteMovie };
