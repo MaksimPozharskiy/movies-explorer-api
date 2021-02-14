@@ -40,4 +40,11 @@ const createMovie = (req, res, next) => {
     .catch(next);
 };
 
-module.exports = { createMovie };
+const getMovies = (req, res, next) => {
+  const owner = req.user._id;
+  Movie.find({ owner })
+    .then((cards) => res.status(200).send(cards))
+    .catch(next);
+};
+
+module.exports = { createMovie, getMovies };

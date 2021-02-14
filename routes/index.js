@@ -4,7 +4,7 @@ const {
   createUser, login, getMe, updateMe,
 } = require('../controllers/users');
 const {
-  createMovie,
+  createMovie, getMovies,
 } = require('../controllers/movies');
 const NotFoundError = require('../errors/not-found-err');
 const auth = require('../middlewares/auth');
@@ -51,6 +51,8 @@ router.post('/movies', celebrate({
     nameEN: Joi.string().required(),
   }),
 }), createMovie);
+
+router.get('/movies', getMovies);
 
 router.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
