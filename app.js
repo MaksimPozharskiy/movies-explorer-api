@@ -32,10 +32,10 @@ app.use((req, res, next) => {
 
 // Мидлвары
 app.use(helmet());
-app.use(limiter);
 app.use(express.json());
 app.use(requestLogger);
 app.use(errorLogger);
+app.use(limiter);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
