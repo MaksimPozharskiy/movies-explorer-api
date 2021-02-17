@@ -1,4 +1,5 @@
 const routerUsers = require('express').Router();
+const validator = require('validator');
 const { celebrate, Joi } = require('celebrate');
 const {
   createUser, login, getMe, updateMe,
@@ -9,7 +10,12 @@ const auth = require('../middlewares/auth');
 routerUsers.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    email: Joi.string().required().email(),
+    email: Joi.string().required().custom((value, helpers) => {
+      if (validator.isEmail(value)) {
+        return value;
+      }
+      return helpers.message('Email не в корректном формате'); // Не забыть на фронте брать message из этого объекта валидации
+    }),
     password: Joi.string().required(),
   }),
 }), createUser);

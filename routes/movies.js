@@ -1,4 +1,5 @@
 const routerMovies = require('express').Router();
+const validator = require('validator');
 const { celebrate, Joi } = require('celebrate');
 const {
   createMovie, getMovies, deleteMovie,
@@ -14,9 +15,24 @@ routerMovies.post('/movies', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
-    trailer: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
-    thumbnail: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле должно быть ссылкой'); // Не забыть на фронте брать message из этого объекта валидации
+    }),
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле должно быть ссылкой'); // Не забыть на фронте брать message из этого объекта валидации
+    }),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле должно быть ссылкой'); // Не забыть на фронте брать message из этого объекта валидации
+    }),
     movieId: Joi.string().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
