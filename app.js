@@ -34,7 +34,6 @@ app.use((req, res, next) => {
 app.use(helmet());
 app.use(express.json());
 app.use(requestLogger);
-app.use(errorLogger);
 app.use(limiter);
 app.use(router);
 app.use(errorLogger);
