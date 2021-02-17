@@ -24,7 +24,7 @@ routerUsers.post('/signin', celebrate({
 // User routes
 routerUsers.use(auth);
 routerUsers.get('/users/me', getMe);
-routerUsers.put('/users/me', celebrate({
+routerUsers.patch('/users/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().required().email(),
