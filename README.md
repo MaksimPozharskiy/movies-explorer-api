@@ -14,3 +14,6 @@ API дипломного проекта по поиску фильмов
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
 
+## Адрес домена
+https://api.movies-explorer.students.nomoredomains.rocks
+
