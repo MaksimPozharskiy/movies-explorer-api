@@ -50,7 +50,7 @@ const login = (req, res, next) => {
       return res.send({ token });
     })
     .catch(() => {
-      throw new UnauthorizedError('Авторизация не пройдена');
+      throw new UnauthorizedError('Неправильная почта или пароль');
     })
     .catch(next);
 };
