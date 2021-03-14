@@ -8,7 +8,7 @@ const router = require('./routes/index');
 const centralErrorsHandler = require('./middlewares/centralErrorsHandler');
 const limiter = require('./middlewares/limiter');
 
-const { PORT = 3000, DB_ADRESS = 'mongodb://localhost:27017/movies-explorer' } = process.env;
+const { PORT = 3001, DB_ADRESS = 'mongodb://localhost:27017/movies-explorer' } = process.env;
 const app = express();
 
 // Подлключение к БД movies-explorer
