@@ -29,8 +29,7 @@ const getMe = (req, res, next) => {
 const updateMe = (req, res, next) => {
   const { name, email } = req.body;
   const owner = req.user._id;
-
-  return User.findOneAndUpdate(owner, { name, email }, { new: true })
+  return User.findByIdAndUpdate(owner, { name, email }, { new: true })
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');
